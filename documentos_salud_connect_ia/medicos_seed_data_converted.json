@@ -1,0 +1,670 @@
+[
+  {
+    "hotelId": "medico-buenosaires-cardio-001",
+    "city": "Cardiología",
+    "nombreCompleto": "Dra. María González",
+    "especialidad": "Cardiología",
+    "matriculaNacional": "MN 45678",
+    "matriculaProvincial": "MP 23456",
+    "sedeId": "sede-buenosaires-001",
+    "sede": "ClinicaSalud - Sede Palermo",
+    "consultorio": "2do Piso, Consultorio 204",
+    "direccion": "Av. Santa Fe 3456, Palermo, CABA",
+    "ciudad": "Buenos Aires",
+    "telefono": "+54 11 4567-8900",
+    "diasAtencion": [
+      "Lunes",
+      "Miércoles",
+      "Viernes"
+    ],
+    "horariosAtencion": [
+      {
+        "dia": "Lunes",
+        "turnoMañana": {
+          "inicio": "09:00",
+          "fin": "13:00"
+        },
+        "turnoTarde": {
+          "inicio": "15:00",
+          "fin": "19:00"
+        }
+      },
+      {
+        "dia": "Miércoles",
+        "turnoMañana": {
+          "inicio": "09:00",
+          "fin": "13:00"
+        },
+        "turnoTarde": {
+          "inicio": "15:00",
+          "fin": "19:00"
+        }
+      },
+      {
+        "dia": "Viernes",
+        "turnoMañana": {
+          "inicio": "09:00",
+          "fin": "13:00"
+        }
+      }
+    ],
+    "duracionTurno": 30,
+    "obrasSociales": [
+      {
+        "nombre": "OSDE",
+        "planes": [
+          "210",
+          "310",
+          "410",
+          "510"
+        ]
+      },
+      {
+        "nombre": "Swiss Medical",
+        "planes": [
+          "SMG20",
+          "SMG30"
+        ]
+      },
+      {
+        "nombre": "Galeno",
+        "planes": [
+          "Azul",
+          "Oro"
+        ]
+      },
+      {
+        "nombre": "Medicus",
+        "planes": [
+          "Blue",
+          "Gold"
+        ]
+      }
+    ],
+    "valorConsulta": 15000,
+    "aceptaParticulares": true
+  },
+  {
+    "hotelId": "medico-buenosaires-dermato-001",
+    "city": "Dermatología",
+    "nombreCompleto": "Dr. Carlos Rodríguez",
+    "especialidad": "Dermatología",
+    "matriculaNacional": "MN 56789",
+    "matriculaProvincial": "MP 34567",
+    "sedeId": "sede-buenosaires-001",
+    "sede": "ClinicaSalud - Sede Palermo",
+    "consultorio": "3er Piso, Consultorio 301",
+    "direccion": "Av. Santa Fe 3456, Palermo, CABA",
+    "ciudad": "Buenos Aires",
+    "telefono": "+54 11 4567-8900",
+    "diasAtencion": [
+      "Martes",
+      "Jueves"
+    ],
+    "horariosAtencion": [
+      {
+        "dia": "Martes",
+        "turnoMañana": {
+          "inicio": "10:00",
+          "fin": "14:00"
+        },
+        "turnoTarde": {
+          "inicio": "16:00",
+          "fin": "20:00"
+        }
+      },
+      {
+        "dia": "Jueves",
+        "turnoMañana": {
+          "inicio": "10:00",
+          "fin": "14:00"
+        },
+        "turnoTarde": {
+          "inicio": "16:00",
+          "fin": "20:00"
+        }
+      }
+    ],
+    "duracionTurno": 30,
+    "obrasSociales": [
+      {
+        "nombre": "OSDE",
+        "planes": [
+          "210",
+          "310",
+          "410"
+        ]
+      },
+      {
+        "nombre": "Swiss Medical",
+        "planes": [
+          "SMG20"
+        ]
+      },
+      {
+        "nombre": "Galeno",
+        "planes": [
+          "Azul"
+        ]
+      }
+    ],
+    "valorConsulta": 12000,
+    "aceptaParticulares": true
+  },
+  {
+    "hotelId": "medico-buenosaires-general-001",
+    "city": "Medicina General",
+    "nombreCompleto": "Dra. Ana Martínez",
+    "especialidad": "Medicina General",
+    "matriculaNacional": "MN 67890",
+    "matriculaProvincial": "MP 45678",
+    "sedeId": "sede-buenosaires-001",
+    "sede": "ClinicaSalud - Sede Palermo",
+    "consultorio": "1er Piso, Consultorio 105",
+    "direccion": "Av. Santa Fe 3456, Palermo, CABA",
+    "ciudad": "Buenos Aires",
+    "telefono": "+54 11 4567-8900",
+    "diasAtencion": [
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes"
+    ],
+    "horariosAtencion": [
+      {
+        "dia": "Lunes",
+        "turnoMañana": {
+          "inicio": "08:00",
+          "fin": "12:00"
+        },
+        "turnoTarde": {
+          "inicio": "14:00",
+          "fin": "18:00"
+        }
+      },
+      {
+        "dia": "Martes",
+        "turnoMañana": {
+          "inicio": "08:00",
+          "fin": "12:00"
+        },
+        "turnoTarde": {
+          "inicio": "14:00",
+          "fin": "18:00"
+        }
+      },
+      {
+        "dia": "Miércoles",
+        "turnoMañana": {
+          "inicio": "08:00",
+          "fin": "12:00"
+        },
+        "turnoTarde": {
+          "inicio": "14:00",
+          "fin": "18:00"
+        }
+      },
+      {
+        "dia": "Jueves",
+        "turnoMañana": {
+          "inicio": "08:00",
+          "fin": "12:00"
+        },
+        "turnoTarde": {
+          "inicio": "14:00",
+          "fin": "18:00"
+        }
+      },
+      {
+        "dia": "Viernes",
+        "turnoMañana": {
+          "inicio": "08:00",
+          "fin": "12:00"
+        }
+      }
+    ],
+    "duracionTurno": 20,
+    "obrasSociales": [
+      {
+        "nombre": "OSDE",
+        "planes": [
+          "210",
+          "310",
+          "410",
+          "510"
+        ]
+      },
+      {
+        "nombre": "Swiss Medical",
+        "planes": [
+          "SMG20",
+          "SMG30"
+        ]
+      },
+      {
+        "nombre": "Galeno",
+        "planes": [
+          "Azul",
+          "Oro"
+        ]
+      },
+      {
+        "nombre": "Medicus",
+        "planes": [
+          "Blue",
+          "Gold"
+        ]
+      },
+      {
+        "nombre": "PAMI",
+        "planes": [
+          "Estándar"
+        ]
+      }
+    ],
+    "valorConsulta": 8000,
+    "aceptaParticulares": true
+  },
+  {
+    "hotelId": "medico-buenosaires-traumato-001",
+    "city": "Traumatología",
+    "nombreCompleto": "Dr. Pablo Fernández",
+    "especialidad": "Traumatología",
+    "matriculaNacional": "MN 78901",
+    "matriculaProvincial": "MP 56789",
+    "sedeId": "sede-buenosaires-001",
+    "sede": "ClinicaSalud - Sede Palermo",
+    "consultorio": "2do Piso, Consultorio 210",
+    "direccion": "Av. Santa Fe 3456, Palermo, CABA",
+    "ciudad": "Buenos Aires",
+    "telefono": "+54 11 4567-8900",
+    "diasAtencion": [
+      "Lunes",
+      "Miércoles",
+      "Viernes"
+    ],
+    "horariosAtencion": [
+      {
+        "dia": "Lunes",
+        "turnoTarde": {
+          "inicio": "14:00",
+          "fin": "20:00"
+        }
+      },
+      {
+        "dia": "Miércoles",
+        "turnoTarde": {
+          "inicio": "14:00",
+          "fin": "20:00"
+        }
+      },
+      {
+        "dia": "Viernes",
+        "turnoTarde": {
+          "inicio": "14:00",
+          "fin": "20:00"
+        }
+      }
+    ],
+    "duracionTurno": 30,
+    "obrasSociales": [
+      {
+        "nombre": "OSDE",
+        "planes": [
+          "310",
+          "410",
+          "510"
+        ]
+      },
+      {
+        "nombre": "Swiss Medical",
+        "planes": [
+          "SMG30"
+        ]
+      },
+      {
+        "nombre": "Galeno",
+        "planes": [
+          "Oro"
+        ]
+      }
+    ],
+    "valorConsulta": 18000,
+    "aceptaParticulares": true
+  },
+  {
+    "hotelId": "medico-buenosaires-pediatria-001",
+    "city": "Pediatría",
+    "nombreCompleto": "Dra. Laura Sánchez",
+    "especialidad": "Pediatría",
+    "matriculaNacional": "MN 89012",
+    "matriculaProvincial": "MP 67890",
+    "sedeId": "sede-buenosaires-001",
+    "sede": "ClinicaSalud - Sede Palermo",
+    "consultorio": "1er Piso, Consultorio 108",
+    "direccion": "Av. Santa Fe 3456, Palermo, CABA",
+    "ciudad": "Buenos Aires",
+    "telefono": "+54 11 4567-8900",
+    "diasAtencion": [
+      "Lunes",
+      "Martes",
+      "Jueves",
+      "Viernes"
+    ],
+    "horariosAtencion": [
+      {
+        "dia": "Lunes",
+        "turnoMañana": {
+          "inicio": "09:00",
+          "fin": "13:00"
+        }
+      },
+      {
+        "dia": "Martes",
+        "turnoMañana": {
+          "inicio": "09:00",
+          "fin": "13:00"
+        }
+      },
+      {
+        "dia": "Jueves",
+        "turnoMañana": {
+          "inicio": "09:00",
+          "fin": "13:00"
+        },
+        "turnoTarde": {
+          "inicio": "15:00",
+          "fin": "19:00"
+        }
+      },
+      {
+        "dia": "Viernes",
+        "turnoMañana": {
+          "inicio": "09:00",
+          "fin": "13:00"
+        }
+      }
+    ],
+    "duracionTurno": 20,
+    "obrasSociales": [
+      {
+        "nombre": "OSDE",
+        "planes": [
+          "210",
+          "310",
+          "410"
+        ]
+      },
+      {
+        "nombre": "Swiss Medical",
+        "planes": [
+          "SMG20",
+          "SMG30"
+        ]
+      },
+      {
+        "nombre": "Galeno",
+        "planes": [
+          "Azul",
+          "Oro"
+        ]
+      },
+      {
+        "nombre": "PAMI",
+        "planes": [
+          "Estándar"
+        ]
+      }
+    ],
+    "valorConsulta": 10000,
+    "aceptaParticulares": true
+  },
+  {
+    "hotelId": "medico-cordoba-cardio-001",
+    "city": "Cardiología",
+    "nombreCompleto": "Dr. Roberto Gómez",
+    "especialidad": "Cardiología",
+    "matriculaNacional": "MN 34567",
+    "matriculaProvincial": "MP 12345",
+    "sedeId": "sede-cordoba-001",
+    "sede": "ClinicaSalud - Sede Nueva Córdoba",
+    "consultorio": "1er Piso, Consultorio 102",
+    "direccion": "Av. Hipólito Yrigoyen 234, Nueva Córdoba",
+    "ciudad": "Córdoba",
+    "telefono": "+54 351 456-7890",
+    "diasAtencion": [
+      "Martes",
+      "Jueves"
+    ],
+    "horariosAtencion": [
+      {
+        "dia": "Martes",
+        "turnoMañana": {
+          "inicio": "08:00",
+          "fin": "12:00"
+        },
+        "turnoTarde": {
+          "inicio": "15:00",
+          "fin": "19:00"
+        }
+      },
+      {
+        "dia": "Jueves",
+        "turnoMañana": {
+          "inicio": "08:00",
+          "fin": "12:00"
+        },
+        "turnoTarde": {
+          "inicio": "15:00",
+          "fin": "19:00"
+        }
+      }
+    ],
+    "duracionTurno": 30,
+    "obrasSociales": [
+      {
+        "nombre": "OSDE",
+        "planes": [
+          "210",
+          "310",
+          "410"
+        ]
+      },
+      {
+        "nombre": "Swiss Medical",
+        "planes": [
+          "SMG20"
+        ]
+      },
+      {
+        "nombre": "Galeno",
+        "planes": [
+          "Azul"
+        ]
+      }
+    ],
+    "valorConsulta": 13000,
+    "aceptaParticulares": true
+  },
+  {
+    "hotelId": "medico-cordoba-oftalmo-001",
+    "city": "Oftalmología",
+    "nombreCompleto": "Dra. Silvia Torres",
+    "especialidad": "Oftalmología",
+    "matriculaNacional": "MN 23456",
+    "matriculaProvincial": "MP 87654",
+    "sedeId": "sede-cordoba-001",
+    "sede": "ClinicaSalud - Sede Nueva Córdoba",
+    "consultorio": "2do Piso, Consultorio 205",
+    "direccion": "Av. Hipólito Yrigoyen 234, Nueva Córdoba",
+    "ciudad": "Córdoba",
+    "telefono": "+54 351 456-7890",
+    "diasAtencion": [
+      "Lunes",
+      "Miércoles",
+      "Viernes"
+    ],
+    "horariosAtencion": [
+      {
+        "dia": "Lunes",
+        "turnoMañana": {
+          "inicio": "09:00",
+          "fin": "13:00"
+        }
+      },
+      {
+        "dia": "Miércoles",
+        "turnoMañana": {
+          "inicio": "09:00",
+          "fin": "13:00"
+        },
+        "turnoTarde": {
+          "inicio": "15:00",
+          "fin": "18:00"
+        }
+      },
+      {
+        "dia": "Viernes",
+        "turnoMañana": {
+          "inicio": "09:00",
+          "fin": "13:00"
+        }
+      }
+    ],
+    "duracionTurno": 20,
+    "obrasSociales": [
+      {
+        "nombre": "OSDE",
+        "planes": [
+          "210",
+          "310"
+        ]
+      },
+      {
+        "nombre": "Swiss Medical",
+        "planes": [
+          "SMG20"
+        ]
+      },
+      {
+        "nombre": "Galeno",
+        "planes": [
+          "Azul"
+        ]
+      }
+    ],
+    "valorConsulta": 11000,
+    "aceptaParticulares": true
+  },
+  {
+    "hotelId": "medico-cordoba-general-001",
+    "city": "Medicina General",
+    "nombreCompleto": "Dr. Miguel Ángel Pérez",
+    "especialidad": "Medicina General",
+    "matriculaNacional": "MN 45612",
+    "matriculaProvincial": "MP 78945",
+    "sedeId": "sede-cordoba-001",
+    "sede": "ClinicaSalud - Sede Nueva Córdoba",
+    "consultorio": "1er Piso, Consultorio 101",
+    "direccion": "Av. Hipólito Yrigoyen 234, Nueva Córdoba",
+    "ciudad": "Córdoba",
+    "telefono": "+54 351 456-7890",
+    "diasAtencion": [
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes"
+    ],
+    "horariosAtencion": [
+      {
+        "dia": "Lunes",
+        "turnoMañana": {
+          "inicio": "08:00",
+          "fin": "12:00"
+        },
+        "turnoTarde": {
+          "inicio": "14:00",
+          "fin": "18:00"
+        }
+      },
+      {
+        "dia": "Martes",
+        "turnoMañana": {
+          "inicio": "08:00",
+          "fin": "12:00"
+        },
+        "turnoTarde": {
+          "inicio": "14:00",
+          "fin": "18:00"
+        }
+      },
+      {
+        "dia": "Miércoles",
+        "turnoMañana": {
+          "inicio": "08:00",
+          "fin": "12:00"
+        }
+      },
+      {
+        "dia": "Jueves",
+        "turnoMañana": {
+          "inicio": "08:00",
+          "fin": "12:00"
+        },
+        "turnoTarde": {
+          "inicio": "14:00",
+          "fin": "18:00"
+        }
+      },
+      {
+        "dia": "Viernes",
+        "turnoMañana": {
+          "inicio": "08:00",
+          "fin": "12:00"
+        }
+      }
+    ],
+    "duracionTurno": 20,
+    "obrasSociales": [
+      {
+        "nombre": "OSDE",
+        "planes": [
+          "210",
+          "310",
+          "410"
+        ]
+      },
+      {
+        "nombre": "Swiss Medical",
+        "planes": [
+          "SMG20",
+          "SMG30"
+        ]
+      },
+      {
+        "nombre": "Galeno",
+        "planes": [
+          "Azul",
+          "Oro"
+        ]
+      },
+      {
+        "nombre": "Medicus",
+        "planes": [
+          "Blue",
+          "Gold"
+        ]
+      },
+      {
+        "nombre": "PAMI",
+        "planes": [
+          "Estándar"
+        ]
+      }
+    ],
+    "valorConsulta": 7000,
+    "aceptaParticulares": true
+  }
+]

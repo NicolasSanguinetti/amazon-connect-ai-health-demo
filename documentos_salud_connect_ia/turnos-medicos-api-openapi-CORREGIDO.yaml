@@ -1,0 +1,387 @@
+openapi: 3.0.1
+info:
+  title: API de Turnos Médicos - ClinicaSalud
+  description:
+    API REST para búsqueda de médicos, consulta de disponibilidad y gestión de turnos médicos en diferentes sedes.
+    VERSIÓN CORREGIDA - Incluye todos los campos que las lambdas aceptan.
+  version: 2.0.0
+  contact:
+    name: CloudHesive LATAM
+    email: diego@cloudhesive.com
+  license:
+    name: MIT
+
+servers:
+  - url: https://wldr2xok2d.execute-api.us-east-1.amazonaws.com/dev
+    description: AWS API Gateway endpoint
+
+paths:
+  /medicos/buscar:
+    post:
+      operationId: buscarMedicos
+      summary: Buscar médicos por especialidad
+      description:
+        Buscar médicos por especialidad y opcionalmente filtrar por ciudad y obra social.
+        Retorna una lista de médicos disponibles con detalles como nombre, especialidad, sede y consultorio.
+      tags:
+        - Búsqueda de Médicos
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - especialidad
+              properties:
+                especialidad:
+                  type: string
+                  description: La especialidad médica a buscar
+                  example: Cardiología
+                  enum:
+                    - Cardiología
+                    - Dermatología
+                    - Pediatría
+                    - Ginecología
+                    - Traumatología
+                    - Oftalmología
+                    - Otorrinolaringología
+                    - Medicina General
+                    - Psiquiatría
+                    - Neurología
+                    - Gastroenterología
+                    - Endocrinología
+                ciudad:
+                  type: string
+                  description: Filtro opcional por ciudad
+                  example: Buenos Aires
+                obraSocial:
+                  type: string
+                  description: Filtro opcional por obra social
+                  example: OSDE
+      responses:
+        '200':
+          description: Lista de médicos encontrados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  medicos:
+                    type: array
+                    items:
+                      type: object
+                  cantidad:
+                    type: integer
+                  especialidad:
+                    type: string
+
+  /turnos:
+    post:
+      operationId: crearTurno
+      summary: Crear un nuevo turno médico
+      description: |
+        Crear una nueva reserva de turno médico para un paciente con un médico específico.
+        
+        NOTA: Esta función acepta formatos alternativos de campos para compatibilidad:
+        - fechaTurno o fecha (ambos aceptados)
+        - horaTurno o hora (ambos aceptados)
+        - telefono o telefonoPaciente (ambos aceptados)
+      x-amazon-connect-tool-safety: destructive
+      tags:
+        - Turnos
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - medicoId
+                - pacienteId
+                - nombrePaciente
+                - emailPaciente
+              properties:
+                medicoId:
+                  type: string
+                  description: ID del médico
+                  example: medico-buenosaires-cardio-001
+                pacienteId:
+                  type: string
+                  description: ID del paciente
+                  example: 84c06ff4ad2440899cbd91eac98f2ca9
+                # Campos de fecha - acepta ambos formatos
+                fechaTurno:
+                  type: string
+                  format: date
+                  description: Fecha del turno en formato ISO (YYYY-MM-DD). También acepta el campo 'fecha'
+                  example: '2026-02-15'
+                fecha:
+                  type: string
+                  format: date
+                  description: Formato alternativo de fechaTurno (YYYY-MM-DD)
+                  example: '2026-02-15'
+                # Campos de hora - acepta ambos formatos
+                horaTurno:
+                  type: string
+                  description: Hora del turno en formato 24h (HH:MM). También acepta el campo 'hora'
+                  example: '09:00'
+                hora:
+                  type: string
+                  description: Formato alternativo de horaTurno (HH:MM)
+                  example: '09:00'
+                nombrePaciente:
+                  type: string
+                  description: Nombre completo del paciente
+                  example: Juan Pérez
+                emailPaciente:
+                  type: string
+                  format: email
+                  description: Email del paciente
+                  example: juan.perez@ejemplo.com
+                # Campos de teléfono - acepta ambos formatos
+                telefono:
+                  type: string
+                  description: Teléfono del paciente. También acepta 'telefonoPaciente'
+                  example: '+54 9 11 5555-1234'
+                telefonoPaciente:
+                  type: string
+                  description: Formato alternativo de telefono
+                  example: '+54 9 11 5555-1234'
+                obraSocial:
+                  type: string
+                  description: Obra social del paciente
+                  example: OSDE
+                numeroAfiliado:
+                  type: string
+                  description: Número de afiliado de la obra social
+                  example: '123456789'
+                motivoConsulta:
+                  type: string
+                  description: Motivo de la consulta
+                  example: Control anual
+                comentarios:
+                  type: string
+                  description: Comentarios adicionales
+                  example: Paciente con movilidad reducida
+      responses:
+        '201':
+          description: Turno creado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Turno creado exitosamente
+                  turnoId:
+                    type: string
+                    example: TURNO-ABC123
+                  reservation:
+                    type: object
+                    description: Detalles completos del turno creado
+
+  /turnos/paciente:
+    post:
+      operationId: obtenerTurnosPaciente
+      summary: Obtener turnos de un paciente
+      description:
+        Recupera todos los turnos médicos de un paciente específico.
+      tags:
+        - Turnos
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - pacienteId
+              properties:
+                pacienteId:
+                  type: string
+                  description: ID del paciente
+                  example: 84c06ff4ad2440899cbd91eac98f2ca9
+                incluirHistoricos:
+                  type: boolean
+                  description: Incluir turnos pasados (actualmente no implementado, se ignora)
+                  default: false
+      responses:
+        '200':
+          description: Lista de turnos del paciente
+
+  /turnos/modificar:
+    post:
+      operationId: modificarTurno
+      summary: Modificar un turno existente
+      description: |
+        Modificar la fecha, hora u otros datos de un turno médico existente.
+        
+        IMPORTANTE: Esta función acepta formatos alternativos de campos:
+        - fechaTurno o fecha (ambos aceptados)
+        - horaTurno o hora (ambos aceptados)
+        - telefono o telefonoPaciente (ambos aceptados)
+        
+        El agente de IA puede usar cualquiera de estos formatos y la lambda los procesará correctamente.
+      x-amazon-connect-tool-safety: destructive
+      tags:
+        - Turnos
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - turnoId
+                - pacienteId
+              properties:
+                turnoId:
+                  type: string
+                  description: ID del turno a modificar
+                  example: TURNO-2026-02-15-ABC123
+                pacienteId:
+                  type: string
+                  description: ID del paciente (para validación de seguridad)
+                  example: 84c06ff4ad2440899cbd91eac98f2ca9
+                # Campos de fecha - acepta AMBOS formatos
+                fechaTurno:
+                  type: string
+                  format: date
+                  description: Nueva fecha del turno en formato ISO (YYYY-MM-DD). También acepta 'fecha'
+                  example: '2026-02-20'
+                fecha:
+                  type: string
+                  format: date
+                  description: Formato alternativo de fechaTurno (YYYY-MM-DD)
+                  example: '2026-02-20'
+                # Campos de hora - acepta AMBOS formatos
+                horaTurno:
+                  type: string
+                  description: Nueva hora del turno en formato 24h (HH:MM). También acepta 'hora'
+                  example: '10:00'
+                hora:
+                  type: string
+                  description: Formato alternativo de horaTurno (HH:MM)
+                  example: '10:00'
+                # Campos adicionales opcionales
+                motivoConsulta:
+                  type: string
+                  description: Nuevo motivo de consulta (opcional)
+                  example: Control de seguimiento
+                telefono:
+                  type: string
+                  description: Nuevo teléfono del paciente (opcional). También acepta 'telefonoPaciente'
+                  example: '+54 9 11 5555-9999'
+                telefonoPaciente:
+                  type: string
+                  description: Formato alternativo de telefono
+                  example: '+54 9 11 5555-9999'
+      responses:
+        '200':
+          description: Turno modificado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Reservation modified successfully
+                  reservation:
+                    type: object
+                    description: Turno actualizado con todos sus campos
+        '400':
+          description: Solicitud incorrecta - faltan parámetros requeridos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Missing required parameters
+        '404':
+          description: Turno no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Turno not found
+        '409':
+          description: Horario no disponible (conflicto con otro turno)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Horario no disponible
+                  conflictingTurno:
+                    type: string
+                    example: TURNO-XYZ789
+
+  /turnos/cancelar:
+    post:
+      operationId: cancelarTurno
+      summary: Cancelar un turno
+      description:
+        Cancelar un turno médico existente. Requiere turnoId y pacienteId para validación de seguridad.
+      x-amazon-connect-tool-safety: destructive
+      tags:
+        - Turnos
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - turnoId
+                - pacienteId
+              properties:
+                turnoId:
+                  type: string
+                  description: ID del turno a cancelar
+                  example: TURNO-2026-02-15-ABC123
+                pacienteId:
+                  type: string
+                  description: ID del paciente (para validación de seguridad)
+                  example: 84c06ff4ad2440899cbd91eac98f2ca9
+      responses:
+        '200':
+          description: Turno cancelado exitosamente
+        '400':
+          description: Solicitud incorrecta
+        '404':
+          description: Turno no encontrado
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API Key para autenticación con AgentCore Gateway
+

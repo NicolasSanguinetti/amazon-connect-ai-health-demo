@@ -1,0 +1,531 @@
+openapi: 3.0.1
+info:
+  title: API de Turnos Médicos - ClinicaSalud
+  description:
+    API REST para búsqueda de médicos, consulta de disponibilidad y gestión de turnos médicos en diferentes sedes
+  version: 1.0.0
+  contact:
+    name: CloudHesive LATAM
+    email: diego@cloudhesive.com
+  license:
+    name: MIT
+
+servers:
+  - url: ${API_GATEWAY_URL}
+    description: AWS API Gateway endpoint
+
+paths:
+  /medicos/buscar:
+    post:
+      operationId: buscarMedicos
+      summary: Buscar médicos por especialidad
+      description:
+        Buscar médicos por especialidad y opcionalmente filtrar por ciudad y obra social.
+        Retorna una lista de médicos disponibles con detalles como nombre, especialidad, sede y consultorio.
+      tags:
+        - Búsqueda de Médicos
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - especialidad
+              properties:
+                especialidad:
+                  type: string
+                  description: La especialidad médica a buscar
+                  example: Cardiología
+                  enum:
+                    - Cardiología
+                    - Dermatología
+                    - Pediatría
+                    - Ginecología
+                    - Traumatología
+                    - Oftalmología
+                    - Otorrinolaringología
+                    - Medicina General
+                    - Psiquiatría
+                    - Neurología
+                    - Gastroenterología
+                    - Endocrinología
+                ciudad:
+                  type: string
+                  description: Filtro opcional por ciudad
+                  example: Buenos Aires
+                obraSocial:
+                  type: string
+                  description: Filtro opcional por obra social
+                  example: OSDE
+      responses:
+        '200':
+          description: Lista de médicos encontrados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  medicos:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - medicoId
+                        - nombreCompleto
+                        - especialidad
+                        - ciudad
+                      properties:
+                        medicoId:
+                          type: string
+                          description: Identificador único del médico
+                          example: medico-buenosaires-cardio-001
+                        nombreCompleto:
+                          type: string
+                          description: Nombre completo del médico
+                          example: Dra. María González
+                        especialidad:
+                          type: string
+                          description: Especialidad médica
+                          example: Cardiología
+                        matricula:
+                          type: string
+                          description: Número de matrícula profesional
+                          example: MN 45678 - MP 23456
+                        sedeId:
+                          type: string
+                          description: Identificador de la sede
+                          example: sede-buenosaires-001
+                        sede:
+                          type: string
+                          description: Nombre de la sede
+                          example: ClinicaSalud - Sede Palermo
+                        consultorio:
+                          type: string
+                          description: Ubicación del consultorio
+                          example: 2do Piso, Consultorio 204
+                        direccion:
+                          type: string
+                          description: Dirección del consultorio
+                          example: Av. Santa Fe 3456, Palermo, CABA
+                        ciudad:
+                          type: string
+                          description: Ciudad donde atiende
+                          example: Buenos Aires
+                        telefono:
+                          type: string
+                          description: Teléfono del consultorio
+                          example: '+54 11 4567-8900'
+                        diasAtencion:
+                          type: array
+                          items:
+                            type: string
+                          description: Días de la semana que atiende
+                          example: ['Lunes', 'Miércoles', 'Viernes']
+                        obrasSociales:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              nombre:
+                                type: string
+                              planes:
+                                type: array
+                                items:
+                                  type: string
+                          description: Obras sociales que acepta
+                          example: [{"nombre": "OSDE", "planes": ["210", "310"]}]
+                        valorConsulta:
+                          type: number
+                          format: float
+                          description: Valor de la consulta particular
+                          example: 15000
+                  cantidad:
+                    type: integer
+                    description: Cantidad de médicos encontrados
+                  especialidad:
+                    type: string
+                    description: Especialidad buscada
+              example:
+                medicos:
+                  - medicoId: 'medico-buenosaires-cardio-001'
+                    nombreCompleto: 'Dra. María González'
+                    especialidad: 'Cardiología'
+                    matricula: 'MN 45678 - MP 23456'
+                    sedeId: 'sede-buenosaires-001'
+                    sede: 'ClinicaSalud - Sede Palermo'
+                    consultorio: '2do Piso, Consultorio 204'
+                    direccion: 'Av. Santa Fe 3456, Palermo, CABA'
+                    ciudad: 'Buenos Aires'
+                    telefono: '+54 11 4567-8900'
+                    diasAtencion: ['Lunes', 'Miércoles', 'Viernes']
+                    obrasSociales: [{"nombre": "OSDE", "planes": ["210", "310", "410"]}]
+                    valorConsulta: 15000
+                cantidad: 1
+                especialidad: 'Cardiología'
+        '400':
+          description: Solicitud incorrecta - falta especialidad o parámetro inválido
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    example: 'El parámetro especialidad es requerido'
+                  codigo:
+                    type: string
+                    example: 'PARAMETROS_INVALIDOS'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: 'Error interno del servidor'
+
+  /turnos:
+    post:
+      operationId: crearTurno
+      summary: Crear un nuevo turno médico
+      description:
+        Crear una nueva reserva de turno médico para un paciente con un médico específico.
+      tags:
+        - Turnos
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - medicoId
+                - pacienteId
+                - fechaTurno
+                - horaTurno
+                - nombrePaciente
+                - emailPaciente
+                - telefono
+              properties:
+                medicoId:
+                  type: string
+                  description: ID del médico
+                  example: medico-buenosaires-cardio-001
+                pacienteId:
+                  type: string
+                  description: ID del paciente
+                  example: 84c06ff4ad2440899cbd91eac98f2ca9
+                fechaTurno:
+                  type: string
+                  format: date
+                  description: Fecha del turno (YYYY-MM-DD)
+                  example: '2025-02-15'
+                horaTurno:
+                  type: string
+                  description: Hora del turno (HH:MM)
+                  example: '09:00'
+                nombrePaciente:
+                  type: string
+                  description: Nombre completo del paciente
+                  example: Juan Pérez
+                emailPaciente:
+                  type: string
+                  format: email
+                  description: Email del paciente
+                  example: juan.perez@ejemplo.com
+                telefono:
+                  type: string
+                  description: Teléfono del paciente
+                  example: '+54 9 11 5555-1234'
+                obraSocial:
+                  type: string
+                  description: Obra social del paciente
+                  example: OSDE
+                numeroAfiliado:
+                  type: string
+                  description: Número de afiliado de la obra social
+                  example: '123456789'
+                motivoConsulta:
+                  type: string
+                  description: Motivo de la consulta
+                  example: Control anual
+      responses:
+        '201':
+          description: Turno creado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exito:
+                    type: boolean
+                    example: true
+                  mensaje:
+                    type: string
+                    example: Turno reservado exitosamente
+                  turno:
+                    type: object
+                    properties:
+                      turnoId:
+                        type: string
+                        example: TURNO-2025-02-15-ABC123
+                      medicoId:
+                        type: string
+                      medico:
+                        type: string
+                        example: Dra. María González
+                      especialidad:
+                        type: string
+                        example: Cardiología
+                      sedeId:
+                        type: string
+                      sede:
+                        type: string
+                        example: ClinicaSalud - Sede Palermo
+                      consultorio:
+                        type: string
+                        example: 2do Piso, Consultorio 204
+                      fecha:
+                        type: string
+                        format: date
+                      hora:
+                        type: string
+                      nombrePaciente:
+                        type: string
+                      direccion:
+                        type: string
+                      creadoEn:
+                        type: string
+                        format: date-time
+        '400':
+          description: Solicitud incorrecta
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Faltan campos requeridos
+        '404':
+          description: Médico no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Médico no encontrado
+        '409':
+          description: Horario no disponible
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Horario no disponible
+
+  /turnos/paciente:
+    post:
+      operationId: obtenerTurnosPaciente
+      summary: Obtener turnos de un paciente
+      description:
+        Recupera todos los turnos médicos de un paciente específico.
+      tags:
+        - Turnos
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - pacienteId
+              properties:
+                pacienteId:
+                  type: string
+                  description: ID del paciente
+                  example: 84c06ff4ad2440899cbd91eac98f2ca9
+                incluirHistoricos:
+                  type: boolean
+                  description: Incluir turnos pasados
+                  default: false
+      responses:
+        '200':
+          description: Lista de turnos del paciente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  turnos:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        turnoId:
+                          type: string
+                        medicoId:
+                          type: string
+                        medico:
+                          type: string
+                        especialidad:
+                          type: string
+                        fecha:
+                          type: string
+                          format: date
+                        hora:
+                          type: string
+                        sede:
+                          type: string
+                        consultorio:
+                          type: string
+                        estado:
+                          type: string
+                          enum: [confirmado, cancelado, completado]
+                  cantidad:
+                    type: integer
+                  pacienteId:
+                    type: string
+        '400':
+          description: Solicitud incorrecta
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /turnos/modificar:
+    post:
+      operationId: modificarTurno
+      summary: Modificar un turno existente
+      description:
+        Modificar la fecha u hora de un turno médico existente.
+      tags:
+        - Turnos
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - turnoId
+                - pacienteId
+              properties:
+                turnoId:
+                  type: string
+                  description: ID del turno a modificar
+                  example: TURNO-2025-02-15-ABC123
+                pacienteId:
+                  type: string
+                  description: ID del paciente (para validación)
+                  example: 84c06ff4ad2440899cbd91eac98f2ca9
+                fechaTurno:
+                  type: string
+                  format: date
+                  description: Nueva fecha (opcional)
+                  example: '2025-02-20'
+                horaTurno:
+                  type: string
+                  description: Nueva hora (opcional)
+                  example: '10:00'
+      responses:
+        '200':
+          description: Turno modificado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exito:
+                    type: boolean
+                  mensaje:
+                    type: string
+                  turno:
+                    type: object
+        '400':
+          description: Solicitud incorrecta
+        '404':
+          description: Turno no encontrado
+
+  /turnos/cancelar:
+    post:
+      operationId: cancelarTurno
+      summary: Cancelar un turno
+      description:
+        Cancelar un turno médico existente.
+      tags:
+        - Turnos
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - turnoId
+                - pacienteId
+              properties:
+                turnoId:
+                  type: string
+                  description: ID del turno a cancelar
+                  example: TURNO-2025-02-15-ABC123
+                pacienteId:
+                  type: string
+                  description: ID del paciente (para validación)
+                  example: 84c06ff4ad2440899cbd91eac98f2ca9
+      responses:
+        '200':
+          description: Turno cancelado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exito:
+                    type: boolean
+                  mensaje:
+                    type: string
+                  turno:
+                    type: object
+                    properties:
+                      turnoId:
+                        type: string
+                      estado:
+                        type: string
+                      canceladoEn:
+                        type: string
+                        format: date-time
+        '400':
+          description: Solicitud incorrecta
+        '404':
+          description: Turno no encontrado
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API Key para autenticación con AgentCore Gateway
